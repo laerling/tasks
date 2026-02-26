@@ -134,13 +134,34 @@ def overview():
         print(' |')
 
 
+def show_task(task_n):
+    lanes = get_lanes()
+    try:
+        task = next(t for l in lanes for t in l['tasks'] if t['number'] == task_n)
+    except StopIteration:
+        fail("No task with number", task_n)
+    print(f"Task {task['number']}:")
+    print("Description:", task['description'])
+    if 'details' in task:
+        print("Details:\n" + task['details'])
+
+
 def main():
     if len(sys.argv) <= 1:
         overview()
     else:
         cmd = sys.argv[1]
-        pass # TODO
-        print(cmd)
+
+        # if cmd is just a number, show that task
+        task_n = None
+        try:
+            task_n = int(cmd)
+        except ValueError:
+            pass
+        if task_n:
+            show_task(task_n)
+        else:
+            fail("Unknown command:", cmd)
 
 
 if __name__ == "__main__":
