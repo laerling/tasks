@@ -11,13 +11,17 @@ SEP = '|'
 MAX_DESC_LEN = 20 # maximum characters to display for a task
 
 
+def fail(*msg):
+    print(*msg, file=sys.stderr)
+    sys.exit(1)
+
+
 # check that task dir exists
 if not exists(TASK_DIR):
     mkdir(TASK_DIR)
     print("Created task directory in", TASK_DIR)
 elif not isdir(TASK_DIR):
-    print("Task directory exists but isn't a directory:", TASK_DIR, file=sys.stderr)
-    sys.exit(1)
+    fail("Task directory exists but isn't a directory:", TASK_DIR)
 
 
 def get_lanes():
@@ -35,9 +39,7 @@ def get_lanes():
             for line in f.readlines():
                 lane_name = line.strip()
                 if lane_name not in item_names:
-                    print("Lanes file found, but contains unknown lane name:",
-                            lane_name, file=sys.stderr)
-                    sys.exit(1)
+                    fail("Lanes file found, but contains unknown lane name:", lane_name)
                 lane_names.append(lane_name)
     else:
         print("No lanes file found, sorting lanes alphabetically")
