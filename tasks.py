@@ -25,7 +25,11 @@ elif not isdir(TASK_DIR):
 
 
 def get_lanes():
-    """Read and return lanes from lane files from task directory"""
+    """Read and return lanes from lane files from task directory.
+    This function returns a list of lanes, each lane being a dictionary with
+    the keys 'name' and 'tasks'. lane['tasks'] is a list of dictionaries with
+    the keys 'description', 'number', and possibly 'details'.
+    """
     global TASK_DIR
 
     # read files from lane directory
