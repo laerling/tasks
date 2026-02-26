@@ -122,6 +122,8 @@ def overview():
                 s = f"{task.get('number')} "
             if row_i < len(lane['tasks']):
                 s += task['description']
+            if len(s) > lane['width']:
+                s = s[:lane['width']-3] + "..."
             print(f"{s:<{lane['width']}}", end=' ')
         print(' |')
 
